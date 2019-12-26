@@ -8,7 +8,7 @@
 h1 {
   background-color: #38a85a;
   color: white;
-  padding: 5%;
+  padding: 3%;
   margin-top: 0%;
 }
 </style>

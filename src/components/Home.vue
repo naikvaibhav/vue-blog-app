@@ -26,6 +26,23 @@
   </div>
 </template>
 
+<script>
+import axios from "axios";
+export default {
+  name: "Home",
+  mounted() {
+    axios
+      .get(
+        "http://localhost:3001/api/v1/blogs/view/?title=blog2"
+      )
+      .then(response => {
+        this.results = response.data.results;
+        window.console.log(this.results);
+      });
+  }
+};
+</script>
+
 <style scoped>
 body {
   font: normal 18px/1.5 "Fira Sans", "Helvetica Neue", sans-serif;
