@@ -1,0 +1,62 @@
+<template>
+  <div id="add-blog">
+    <h2>Add a new blog post</h2>
+    <form>
+      <label>Blog Title:</label>
+      <input type="text" required v-model.lazy="blog.title" />
+      <label>Blog Description:</label>
+      <input type="text" required v-model.lazy="blog.description" />
+      <label>Blog Content:</label>
+      <textarea v-model.lazy="blog.content"></textarea>
+    </form>
+    <div id="preview">
+      <h3>Preview Blogs</h3>
+      <p>Blog Title: {{blog.title}}</p>
+      <p>Blog Description: {{blog.description}}</p>
+      <p>Blog Content:{{blog.content}}</p>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "BlogComponent",
+  data() {
+    return {
+      blog: {
+        title: " ",
+        description: " ",
+        content: " "
+      }
+    };
+  }
+};
+</script>
+
+<style scoped>
+#add-blog * {
+  box-sizing: border-box;
+}
+#add-blog {
+  margin: 20px auto;
+  max-width: 500px;
+}
+label {
+  display: block;
+  margin: 20px 0 10px;
+}
+input[type="text"],
+textarea {
+  display: block;
+  width: 100%;
+  padding: 8px;
+}
+#preview {
+  padding: 10px 20px;
+  border: 1px dotted #ccc;
+  margin: 30px 0px 0px 0px 0px;
+}
+h3 {
+  margin-top: 10px;
+}
+</style>
