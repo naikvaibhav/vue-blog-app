@@ -4,11 +4,17 @@
   </div>
 </template>
 
-<style>
+<script>
+export default {
+  name: "HeaderComponent"
+};
+</script>
+
+<style scoped>
 h1 {
   background-color: #38a85a;
   color: white;
-  padding: 3%;
+  /* padding: 3%; */
   margin-top: 0%;
 }
 </style>

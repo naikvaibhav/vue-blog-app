@@ -1,16 +1,17 @@
 import Vue from "vue";
 import App from "./App.vue";
-import Home from "./components/Home.vue";
 import VueRouter from "vue-router";
-import VueResource from "vue-resource";
-Vue.use(VueResource);
-Vue.use(VueRouter);
+// import axios from "axios";
+// import VueAxios from "vue-axios";
+import BootstrapVue from "bootstrap-vue";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+// Vue.use(VueAxios, axios);
+import routes from "./routes";
 
-export var router = new VueRouter();
-
-new VueRouter({
-  routes: [{ path: "/", component: Home }]
-});
+// new VueRouter({
+//   routes: [{ path: "/", component: Home }]
+// });
 
 // // Redirect to the home route if any routes are unmatched
 // router.redirect({
@@ -18,7 +19,11 @@ new VueRouter({
 // });
 
 Vue.config.productionTip = false;
+Vue.use(VueRouter);
+Vue.use(BootstrapVue);
 
+const router = new VueRouter({ mode: "history", routes });
 new Vue({
+  router,
   render: h => h(App)
 }).$mount("#app");

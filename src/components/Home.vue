@@ -1,13 +1,15 @@
 <template>
-  <div></div>
+  <div>
+    <header-component />
+  </div>
 </template>
 
 <script>
-// import axios from "axios";
+import HeaderComponent from "./../components/HeaderComponent.vue";
 export default {
-  name: "Home"
+  name: "HomeComponent",
+  component: HeaderComponent
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -4,23 +4,51 @@
       <ul class="flex-outer">
         <li>
           <label for="email">Email</label>
-          <input type="text" id="email" placeholder="Enter the email" />
+          <input type="text" id="email" placeholder="Enter the email" v-model="user.email" />
         </li>
         <li>
           <label for="password">Password</label>
-          <input type="password" id="password" placeholder="Enter the password" />
+          <input type="password" v-model="user.password" />
         </li>
-        <button type="submit" style="margin-right:16px;">Login</button>
-        <button type="submit" style="margin-right:16px;">Signup</button>
+        <button type="submit" style="margin-right:16px;" v-on:click.prevent="signin">SignIn</button>
       </ul>
     </form>
+    <h2 v-if="result">{{msg}}</h2>
   </div>
 </template>
 
 
 <script>
+import axios from "axios";
 export default {
-  name: UserComponent
+  name: "SigninComponent",
+  data() {
+    return {
+      user: {
+        email: " ",
+        password: " "
+      },
+      result: false,
+      msg: ""
+    };
+  },
+  created() {},
+  methods: {
+    signin() {
+      axios
+        .post("http://localhost:3001/api/v1/users/signin", {
+          email: this.user.email,
+          password: this.user.password
+        })
+        .then(data => {
+          window.console.log(data);
+          this.msg = data.data.message;
+          window.console.log("msg", this.msg);
+          this.result = true;
+        })
+        .catch(err => window.console.log(err));
+    }
+  }
 };
 </script>
 

@@ -1,19 +1,37 @@
 <template>
   <div id="add-blog">
     <h2>Add a new blog post</h2>
-    <form>
+    <form v-if="!submitted">
       <label>Blog Title:</label>
       <input type="text" required v-model.lazy="blog.title" />
       <label>Blog Description:</label>
       <input type="text" required v-model.lazy="blog.description" />
       <label>Blog Content:</label>
       <textarea v-model.lazy="blog.content"></textarea>
+      <label>Author name:</label>
+      <input type="text" required v-model.lazy="blog.author" />
+      <label style="display:inline-block">Category of blog:</label>
+      <select v-model="blog.category">
+        <option v-bind:key="category" v-for="category in categories">{{
+          category
+        }}</option>
+      </select>
+      <br />
+      <b-button class="mt-2" v-on:click.prevent="post" variant="primary"
+        >Add blog</b-button
+      >
     </form>
+    <div v-if="submitted">
+      <h3>Blog is posted.....</h3>
+    </div>
+
     <div id="preview">
       <h3>Preview Blogs</h3>
-      <p>Blog Title: {{blog.title}}</p>
-      <p>Blog Description: {{blog.description}}</p>
-      <p>Blog Content:{{blog.content}}</p>
+      <p>Blog Title: {{ blog.title }}</p>
+      <p>Blog Description: {{ blog.description }}</p>
+      <p>Blog Content:{{ blog.content }}</p>
+      <p>Blog Author:{{ blog.author }}</p>
+      <p>Category of blog: {{ blog.category }}</p>
     </div>
   </div>
 </template>
@@ -26,9 +44,39 @@ export default {
       blog: {
         title: " ",
         description: " ",
-        content: " "
-      }
+        content: " ",
+        category: " ",
+        author: " "
+      },
+      categories: [
+        "Food",
+        "Adventure",
+        "Sports",
+        "Science",
+        "Fiction",
+        "Travel"
+      ],
+      submitted: false
     };
+  },
+  methods: {
+    post() {
+      this.axios
+        .post("http://localhost:3001/api/v1/blogs/create", {
+          title: this.blog.title,
+          description: this.blog.description,
+          author: this.blog.author,
+          content: this.blog.content,
+          category: this.blog.category
+        })
+        .then(function(data) {
+          window.console.log(data);
+          this.submitted = true;
+        })
+        .catch(function(err) {
+          window.console.log(err);
+        });
+    }
   }
 };
 </script>
@@ -54,9 +102,21 @@ textarea {
 #preview {
   padding: 10px 20px;
   border: 1px dotted #ccc;
-  margin: 30px 0px 0px 0px 0px;
+  /* margin: 30px 0px 0px 0px 0px; */
+  margin-top: 7%;
+}
+#preview p {
+  text-align: left;
 }
 h3 {
   margin-top: 10px;
+}
+#checkboxes input {
+  display: inline-block;
+  margin-right: 10px;
+}
+#checkboxes label {
+  display: inline-block;
+  margin-right: 10px;
 }
 </style>
