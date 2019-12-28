@@ -4,11 +4,11 @@
       <ul class="flex-outer">
         <li>
           <label for="email">Email</label>
-          <input type="text" id="email" v-model="newUser.email" />
+          <input type="text" id="email" placeholder="Enter the email" v-model="newUser.email" />
         </li>
         <li>
           <label for="password">Password</label>
-          <input type="password" v-model="newUser.password" />
+          <input type="password" placeholder="Enter the passsword" v-model="newUser.password" />
         </li>
         <button type="submit" style="margin-right:16px;" v-on:click.prevent="signup">Signup</button>
       </ul>
@@ -23,8 +23,8 @@ export default {
   data() {
     return {
       newUser: {
-        email: " ",
-        password: " "
+        email: "",
+        password: ""
       },
       msg: ""
     };

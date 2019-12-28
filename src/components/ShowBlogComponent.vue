@@ -1,9 +1,12 @@
 <template>
   <div id="show-blogs">
     <h1>View all the blogs</h1>
-    <div v-bind:key="blog" v-for="blog in blogs" class="single-blog">
-      <h2 style="border-bottom: 2px solid black">{{ blog.title }}</h2>
-      <article>{{ blog.content }}</article>
+    <div v-bind:key="blog.blogId" v-for="blog in blogs" class="single-blog">
+      <router-link v-bind:to="'/view/'+blog.blogId">
+        <h2 style="border-bottom: 2px solid black">{{ blog.title }}</h2>
+      </router-link>
+      <article>{{ blog.description }}</article>
+      <span class="text-muted">{{blog.views}} views</span>
     </div>
   </div>
 </template>
@@ -37,7 +40,7 @@ export default {
   padding: 20px;
   margin: 20px 0;
   box-sizing: border-box;
-  background: rgba(104, 100, 100, 0.548);
+  background: #e0c8d0;
   text-align: left;
 }
 </style>

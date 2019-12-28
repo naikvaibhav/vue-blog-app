@@ -23,6 +23,11 @@ Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 
 const router = new VueRouter({ mode: "history", routes });
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some(route => route.meta.requiresAuth)) {
+//     next("/create");
+//   } else next();
+// });
 new Vue({
   router,
   render: h => h(App)

@@ -1,13 +1,26 @@
 <template>
   <div id="app">
     <header-component />
-    <nav>
-      <router-link to="/">Home</router-link>
-      <router-link to="/create">Create</router-link>
-      <router-link to="/view">View</router-link>
-      <router-link to="/signin">Signin</router-link>
-      <router-link to="/signup">Signup</router-link>
-    </nav>
+    <b-nav style="background:#eee">
+      <!-- <b-nav-item>
+        <router-link to="/">Home</router-link>
+      </b-nav-item>-->
+      <b-nav-item>
+        <router-link to="/create">Create</router-link>
+      </b-nav-item>
+      <b-nav-item>
+        <router-link to="/view">View</router-link>
+      </b-nav-item>
+      <b-nav-item>
+        <router-link to="/signin">Signin</router-link>
+      </b-nav-item>
+      <b-nav-item>
+        <router-link to="/signup">Signup</router-link>
+      </b-nav-item>
+      <!-- <b-nav-item>
+        <router-link to="/user/:id">User</router-link>
+      </b-nav-item>-->
+    </b-nav>
     <router-view />
   </div>
 </template>

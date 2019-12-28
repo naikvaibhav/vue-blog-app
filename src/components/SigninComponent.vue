@@ -8,7 +8,7 @@
         </li>
         <li>
           <label for="password">Password</label>
-          <input type="password" v-model="user.password" />
+          <input type="password" placeholder="Enter the passsword" v-model="user.password" />
         </li>
         <button type="submit" style="margin-right:16px;" v-on:click.prevent="signin">SignIn</button>
       </ul>
@@ -25,11 +25,12 @@ export default {
   data() {
     return {
       user: {
-        email: " ",
-        password: " "
+        email: "",
+        password: ""
       },
       result: false,
-      msg: ""
+      msg: "",
+      id: ""
     };
   },
   created() {},
@@ -39,12 +40,19 @@ export default {
         .post("http://localhost:3001/api/v1/users/signin", {
           email: this.user.email,
           password: this.user.password
-        })
+        }) 
         .then(data => {
+          // let accessToken = data.data.token;
+          // localStorage.setItem('token',accessToken);
+          // localStorage.setItem('user',data.data.result.data.email)
+          // window.isSignedIn = true;
           window.console.log(data);
-          this.msg = data.data.message;
+          this.msg = data.data.result.message;
           window.console.log("msg", this.msg);
           this.result = true;
+          this.id = data.data.result.data._id;
+          if (data.status == 200)
+            this.$router.push({ path: "/user/" + this.id + "/profile" });
         })
         .catch(err => window.console.log(err));
     }

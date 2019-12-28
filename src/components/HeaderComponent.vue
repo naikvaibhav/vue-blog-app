@@ -16,5 +16,6 @@ h1 {
   color: white;
   /* padding: 3%; */
   margin-top: 0%;
+  margin-bottom: 0;
 }
 </style>
