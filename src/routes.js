@@ -1,3 +1,4 @@
+import VueRouter from "vue-router";
 import UserComponent from "./components/UserComponent.vue";
 import UserprofileComponent from "./components/UserprofileComponent.vue";
 import UserpostComponent from "./components/UserpostComponent.vue";
@@ -10,7 +11,7 @@ import EditblogComponent from "./components/EditblogComponent.vue";
 import Redirect from "./components/Redirect.vue";
 // import DeleteblogComponent from "./components/DeleteblogComponent.vue";
 // import HomeComponent from "./components/HomeComponent.vue";
-
+Vue.use(Router);
 const routes = [
   // { path: "/", component: HomeComponent },
   { path: "/signup", component: SignupComponent },
@@ -36,4 +37,33 @@ const routes = [
   { path: "/redirect", component: Redirect }
   // { path: "/delete/:blogId", component: DeleteblogComponent }
 ];
-export default routes;
+const router = new VueRouter({ mode: "history", routes });
+
+router.beforeEach((to, from, next) => {
+  var a_user = localStorage.getItem("user");
+  var user = !a_user ? {} : JSON.parse(a_user);
+
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    console.log("REQUIRES AUTH");
+    if (!user) {
+      // if not, redirect to login page.
+      console.log("Not Logged in");
+      next({
+        path: "/login",
+        query: { redirect: to.fullPath }
+      });
+    }  else {
+      console.log("No Access");
+      next({
+        path: "/noaccess",
+        query: { redirect: to.fullPath }
+      });
+    }
+  } else {
+    console.log("Does not require auth");
+    next();
+  }
+});
+
+export default router;
