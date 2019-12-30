@@ -14,7 +14,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "ShowBlogComponent",
+  name: "allBlogs",
   data() {
     return {
       blogs: []

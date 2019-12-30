@@ -1,12 +1,8 @@
 import Vue from "vue";
 import App from "./App.vue";
-import VueRouter from "vue-router";
-// import axios from "axios";
-// import VueAxios from "vue-axios";
 import BootstrapVue from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
-// Vue.use(VueAxios, axios);
 import routes from "./routes";
 
 // new VueRouter({
@@ -19,15 +15,11 @@ import routes from "./routes";
 // });
 
 Vue.config.productionTip = false;
-Vue.use(VueRouter);
+// Vue.use(VueAxios, axios);
+// Vue.use(VueRouter);
 Vue.use(BootstrapVue);
+const router = routes;
 
-const router = new VueRouter({ mode: "history", routes });
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(route => route.meta.requiresAuth)) {
-//     next("/create");
-//   } else next();
-// });
 new Vue({
   router,
   render: h => h(App)

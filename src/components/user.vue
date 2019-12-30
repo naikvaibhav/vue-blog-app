@@ -1,9 +1,9 @@
 <template>
-  <div>Post</div>
+  <router-view></router-view>
 </template>
 
 <script>
 export default {
-  name: "UserpostComponent"
+  name: "user"
 };
 </script>

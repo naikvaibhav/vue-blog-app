@@ -1,69 +1,95 @@
-import VueRouter from "vue-router";
-import UserComponent from "./components/UserComponent.vue";
-import UserprofileComponent from "./components/UserprofileComponent.vue";
-import UserpostComponent from "./components/UserpostComponent.vue";
-import BlogComponent from "./components/BlogComponent.vue";
-import ShowBlogComponent from "./components/ShowBlogComponent.vue";
-import SigninComponent from "./components/SigninComponent.vue";
-import SignupComponent from "./components/SignupComponent.vue";
-import SingleblogComponent from "./components/SingleblogComponent.vue";
-import EditblogComponent from "./components/EditblogComponent.vue";
+import Vue from "vue";
+import Router from "vue-router";
+import user from "./components/user.vue";
+import userProfile from "./components/userProfile.vue";
+// import UserpostComponent from "./components/UserpostComponent.vue";
+import postBlog from "./components/postBlog.vue";
+import allBlogs from "./components/allBlogs.vue";
+import signin from "./components/signin.vue";
+import signup from "./components/signup.vue";
+import eachBlog from "./components/eachBlog.vue";
+import editBlog from "./components/editBlog.vue";
 import Redirect from "./components/Redirect.vue";
-// import DeleteblogComponent from "./components/DeleteblogComponent.vue";
-// import HomeComponent from "./components/HomeComponent.vue";
+import restricted from "./components/restricted.vue";
 Vue.use(Router);
+
 const routes = [
-  // { path: "/", component: HomeComponent },
-  { path: "/signup", component: SignupComponent },
-  { path: "/signin", component: SigninComponent },
+  { path: "/signup", component: signup },
+  { path: "/signin", component: signin },
   {
-    path: "/user/:id",
-    component: UserComponent,
+    path: "/restricted",
+    component: restricted,
     children: [
-      { path: "profile", component: UserprofileComponent },
-      { path: "posts", component: UserpostComponent }
+      { path: "/create", component: postBlog },
+      { path: "/view", component: allBlogs },
+      { path: "/view/:blogId", component: eachBlog },
+      { path: "/edit/:blogId", component: editBlog },
+      {
+        path: "/user/:id",
+        component: user,
+        children: [{ path: "profile", component: userProfile }]
+      }
     ]
   },
-  {
-    path: "/create",
-    component: BlogComponent,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  { path: "/view", component: ShowBlogComponent },
-  { path: "/view/:blogId", component: SingleblogComponent },
-  { path: "/edit/:blogId", component: EditblogComponent },
+  // { path: "/create", component: postBlog },
+  // { path: "/view", component: allBlogs },
+  // { path: "/view/:blogId", component: eachBlog },
+  // { path: "/edit/:blogId", component: editBlog },
   { path: "/redirect", component: Redirect }
-  // { path: "/delete/:blogId", component: DeleteblogComponent }
+  // {
+  //   path: "/user/:id",
+  //   component: user,
+  //   children: [{ path: "profile", component: userProfile }]
+  // }
 ];
-const router = new VueRouter({ mode: "history", routes });
 
-router.beforeEach((to, from, next) => {
-  var a_user = localStorage.getItem("user");
-  var user = !a_user ? {} : JSON.parse(a_user);
+const router = new Router({ mode: "history", routes });
 
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    // this route requires auth, check if logged in
-    console.log("REQUIRES AUTH");
-    if (!user) {
-      // if not, redirect to login page.
-      console.log("Not Logged in");
-      next({
-        path: "/login",
-        query: { redirect: to.fullPath }
-      });
-    }  else {
-      console.log("No Access");
-      next({
-        path: "/noaccess",
-        query: { redirect: to.fullPath }
-      });
-    }
-  } else {
-    console.log("Does not require auth");
-    next();
-  }
-});
+// const router = new VueRouter({
+//   mode: "history",
+//   routes: [
+//     // { path: "/", component: HomeComponent },
+//     {
+//       path: "/create",
+//       component: BlogComponent,
+//       meta: {
+//         requiresAuth: true
+//       }
+//     },
+//     // { path: "/delete/:blogId", component: DeleteblogComponent }
+//   ]
+// });
 
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some(route => route.meta.requiresAuth)) {
+//     next("/create");
+//   } else next();
+// });
+
+// router.beforeEach((to, from, next) => {
+//   var a_user = localStorage.getItem("user");
+//   var user = !a_user ? {} : JSON.parse(a_user);
+
+//   if (to.matched.some(record => record.meta.requiresAuth)) {
+//     // this route requires auth, check if logged in
+//     // console.log("REQUIRES AUTH");
+//     if (!user) {
+//       // if not, redirect to login page.
+//       // console.log("Not Logged in");
+//       next({
+//         path: "/login",
+//         query: { redirect: to.fullPath }
+//       });
+//     } else {
+//       // console.log("No Access");
+//       next({
+//         path: "/noaccess",
+//         query: { redirect: to.fullPath }
+//       });
+//     }
+//   } else {
+//     // console.log("Does not require auth");
+//     next();
+//   }
+// });
 export default router;

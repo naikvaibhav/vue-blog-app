@@ -1,37 +1,20 @@
 <template>
   <div id="app">
-    <header-component />
-    <b-nav style="background:#eee">
-      <!-- <b-nav-item>
-        <router-link to="/">Home</router-link>
-      </b-nav-item>-->
-      <b-nav-item>
-        <router-link to="/create">Create</router-link>
-      </b-nav-item>
-      <b-nav-item>
-        <router-link to="/view">View</router-link>
-      </b-nav-item>
-      <b-nav-item>
-        <router-link to="/signin">Signin</router-link>
-      </b-nav-item>
-      <b-nav-item>
-        <router-link to="/signup">Signup</router-link>
-      </b-nav-item>
-      <!-- <b-nav-item>
-        <router-link to="/user/:id">User</router-link>
-      </b-nav-item>-->
-    </b-nav>
+    <blogHeader />
+    <!-- <topnavbar /> -->
     <router-view />
   </div>
 </template>
 
 <script>
-import HeaderComponent from "./components/HeaderComponent";
+// import topnavbar from "./components/Topnavbar";
+import blogHeader from "./components/blogHeader.vue";
 
 export default {
   name: "app",
   components: {
-    HeaderComponent
+    blogHeader
+    // topnavbar
   }
 };
 </script>

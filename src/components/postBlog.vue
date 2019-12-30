@@ -1,6 +1,6 @@
 <template>
   <div id="add-blog">
-    <form>
+    <form v-if="!submitted">
       <h2>Add a new blog post</h2>
       <label>Blog Title:</label>
       <input type="text" required v-model.lazy="blog.title" />
@@ -11,16 +11,19 @@
       <label>Author name:</label>
       <input type="text" required v-model.lazy="blog.author" />
       <label style="display:inline-block">Category of blog:</label>
-      <!-- <select v-model="blog.category">
+      <select v-model="blog.category">
         <option v-bind:key="category" v-for="category in categories">
           {{
           category
           }}
         </option>
-      </select>-->
+      </select>
       <br />
       <b-button class="mt-2" v-on:click.prevent="post" variant="primary">Add blog</b-button>
     </form>
+    <div v-if="submitted">
+      <h3>Blog is posted.....</h3>
+    </div>
 
     <div id="preview">
       <h3>Preview Blogs</h3>
@@ -33,20 +36,34 @@
   </div>
 </template>
 
-
 <script>
 import axios from "axios";
 export default {
-  name: "EditblogComponent",
+  name: "postBlog",
   data() {
     return {
-      blog: {}
+      blog: {
+        title: " ",
+        description: " ",
+        content: " ",
+        category: " ",
+        author: " "
+      },
+      categories: [
+        "Food",
+        "Adventure",
+        "Sports",
+        "Science",
+        "Fiction",
+        "Travel"
+      ],
+      submitted: false
     };
   },
   methods: {
     post() {
       axios
-        .put("http://localhost:3001/api/v1/blogs/edit/" + this.blog.blogId, {
+        .post("http://localhost:3001/api/v1/blogs/create", {
           title: this.blog.title,
           description: this.blog.description,
           author: this.blog.author,
@@ -55,27 +72,15 @@ export default {
         })
         .then(data => {
           window.console.log(data);
+          this.submitted = true;
         })
         .catch(err => {
           window.console.log(err);
         });
     }
-  },
-  created() {
-    axios
-      .get(
-        "http://localhost:3001/api/v1/blogs/view/" + this.$route.params.blogId
-      )
-      .then(data => {
-        window.console.log(data.data.data);
-        this.blog = data.data.data;
-        window.console.log(this.blog);
-      })
-      .catch(err => window.console.log(err));
   }
 };
 </script>
-
 
 <style scoped>
 #add-blog * {

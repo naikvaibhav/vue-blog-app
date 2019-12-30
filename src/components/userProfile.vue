@@ -1,9 +1,9 @@
 <template>
-  <router-view></router-view>
+  <div>User's profile</div>
 </template>
 
 <script>
 export default {
-  name: "UserComponent"
+  name: "userProfile"
 };
 </script>

@@ -19,7 +19,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "SingleblogComponent",
+  name: "eachBlog",
   data() {
     return {
       blogId: this.$route.params.blogId,

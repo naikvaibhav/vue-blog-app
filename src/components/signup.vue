@@ -1,66 +1,67 @@
 <template>
   <div>
+    <b-nav align="right">
+      <b-nav-item>
+        <router-link to="/view">Blogs</router-link>
+      </b-nav-item>
+    </b-nav>
     <form method="POST">
-      <ul class="flex-outer">
+      <ul class="flex-outer pt-5">
         <li>
           <label for="email">Email</label>
-          <input type="text" id="email" placeholder="Enter the email" v-model="user.email" />
+          <input type="text" id="email" placeholder="Enter the email" v-model="newUser.email" />
         </li>
         <li>
           <label for="password">Password</label>
-          <input type="password" placeholder="Enter the passsword" v-model="user.password" />
+          <input type="password" placeholder="Enter the passsword" v-model="newUser.password" />
         </li>
-        <button type="submit" style="margin-right:16px;" v-on:click.prevent="signin">SignIn</button>
+        <button type="submit" style="margin-right:16px;" v-on:click.prevent="signup">Signup</button>
       </ul>
     </form>
-    <h2 v-if="result">{{msg}}</h2>
+    <router-link to="/signin">Already a member? Sign In</router-link>
   </div>
 </template>
-
 
 <script>
 import axios from "axios";
 export default {
-  name: "SigninComponent",
+  name: "signup",
   data() {
     return {
-      user: {
+      newUser: {
         email: "",
         password: ""
       },
-      result: false,
-      msg: "",
-      id: ""
+      msg: ""
     };
   },
-  created() {},
   methods: {
-    signin() {
+    signup() {
       axios
-        .post("http://localhost:3001/api/v1/users/signin", {
-          email: this.user.email,
-          password: this.user.password
-        }) 
+        .post("http://localhost:3001/api/v1/users/signup", {
+          email: this.newUser.email,
+          password: this.newUser.password
+        })
         .then(data => {
-          // let accessToken = data.data.token;
-          // localStorage.setItem('token',accessToken);
-          // localStorage.setItem('user',data.data.result.data.email)
-          // window.isSignedIn = true;
           window.console.log(data);
-          this.msg = data.data.result.message;
-          window.console.log("msg", this.msg);
-          this.result = true;
-          this.id = data.data.result.data._id;
-          if (data.status == 200)
-            this.$router.push({ path: "/user/" + this.id + "/profile" });
+          this.msg = data.data.message;
         })
         .catch(err => window.console.log(err));
+    }
+  },
+  computed: {
+    hide() {
+      return this.$route.path === "/signin" || this.$route.path === "/signup";
     }
   }
 };
 </script>
 
+
 <style scoped>
+form {
+  padding-bottom: 2%;
+}
 body {
   font: normal 18px/1.5 "Fira Sans", "Helvetica Neue", sans-serif;
   /* background: #3aafab; */
