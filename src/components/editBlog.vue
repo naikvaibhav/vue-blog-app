@@ -19,7 +19,9 @@
         </option>
       </select>-->
       <br />
-      <b-button class="mt-2" v-on:click.prevent="post" variant="primary">Add blog</b-button>
+      <b-button class="mt-2" v-on:click.prevent="post" variant="primary"
+        >Add blog</b-button
+      >
     </form>
 
     <div id="preview">
@@ -33,7 +35,6 @@
   </div>
 </template>
 
-
 <script>
 import axios from "axios";
 export default {
@@ -46,13 +47,21 @@ export default {
   methods: {
     post() {
       axios
-        .put("http://localhost:3001/api/v1/blogs/edit/" + this.blog.blogId, {
-          title: this.blog.title,
-          description: this.blog.description,
-          author: this.blog.author,
-          content: this.blog.content,
-          category: this.blog.category
-        })
+        .put(
+          "http://localhost:3001/api/v1/blogs/edit/" + this.blog.blogId,
+          {
+            title: this.blog.title,
+            description: this.blog.description,
+            author: this.blog.author,
+            content: this.blog.content,
+            category: this.blog.category
+          },
+          {
+            headers: {
+              authToken: JSON.parse(localStorage.getItem("token")).data
+            }
+          }
+        )
         .then(data => {
           window.console.log(data);
         })
@@ -75,7 +84,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 #add-blog * {

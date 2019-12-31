@@ -13,16 +13,19 @@
       <label style="display:inline-block">Category of blog:</label>
       <select v-model="blog.category">
         <option v-bind:key="category" v-for="category in categories">
-          {{
-          category
-          }}
+          {{ category }}
         </option>
       </select>
       <br />
-      <b-button class="mt-2" v-on:click.prevent="post" variant="primary">Add blog</b-button>
+      <b-button class="mt-2" v-on:click.prevent="post" variant="primary"
+        >Add blog</b-button
+      >
     </form>
     <div v-if="submitted">
       <h3>Blog is posted.....</h3>
+    </div>
+    <div v-else>
+      <h3>{{ msg }}</h3>
     </div>
 
     <div id="preview">
@@ -57,7 +60,8 @@ export default {
         "Fiction",
         "Travel"
       ],
-      submitted: false
+      submitted: false,
+      msg: ""
     };
   },
   methods: {
@@ -76,6 +80,7 @@ export default {
         })
         .catch(err => {
           window.console.log(err);
+          this.msg = "Please signin to post a blog...";
         });
     }
   }

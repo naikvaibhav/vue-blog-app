@@ -9,20 +9,34 @@
       <ul class="flex-outer pt-5">
         <li>
           <label for="email">Email</label>
-          <input type="text" id="email" placeholder="Enter the email" v-model="user.email" />
+          <input
+            type="text"
+            id="email"
+            placeholder="Enter the email"
+            v-model="user.email"
+          />
         </li>
         <li>
           <label for="password">Password</label>
-          <input type="password" placeholder="Enter the passsword" v-model="user.password" />
+          <input
+            type="password"
+            placeholder="Enter the passsword"
+            v-model="user.password"
+          />
         </li>
-        <button type="submit" style="margin-right:16px;" v-on:click.prevent="signin">SignIn</button>
+        <button
+          type="submit"
+          style="margin-right:16px;"
+          v-on:click.prevent="signin"
+        >
+          SignIn
+        </button>
       </ul>
     </form>
     <router-link to="/signup">Not a member? Sign Up</router-link>
-    <h2 v-if="result">{{msg}}</h2>
+    <h2 v-if="result">{{ msg }}</h2>
   </div>
 </template>
-
 
 <script>
 import axios from "axios";
@@ -35,8 +49,8 @@ export default {
         password: ""
       },
       result: false,
-      msg: "",
-      id: ""
+      msg: ""
+      // id: ""
     };
   },
   created() {},
@@ -48,13 +62,12 @@ export default {
           password: this.user.password
         })
         .then(data => {
+          localStorage.setItem("token", JSON.stringify(data));
           // window.console.log(data);
           this.msg = data.data.message;
-          // window.console.log("msg", this.msg);
           this.result = true;
-          this.id = data.data.data._id;
-          if (data.status == 200)
-            this.$router.push({ path: "/user/" + this.id + "/profile" });
+          window.console.log(JSON.parse(localStorage.getItem("token")).data);
+          // this.id = data.data.data._id;
         })
         .catch(error => window.console.log(error));
     }

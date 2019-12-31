@@ -8,10 +8,13 @@
         <router-link to="/view">View</router-link>
       </b-nav-item>
       <b-nav-item>
-        <router-link to="/signin">Signin</router-link>
+        <router-link to="/">Signin</router-link>
       </b-nav-item>
       <b-nav-item>
         <router-link to="/signup">Signup</router-link>
+      </b-nav-item>
+      <b-nav-item>
+        <router-link to="/signout">Signout</router-link>
       </b-nav-item>
     </b-nav>
     <router-view />

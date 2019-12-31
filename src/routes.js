@@ -7,6 +7,7 @@ import postBlog from "./components/postBlog.vue";
 import allBlogs from "./components/allBlogs.vue";
 import signin from "./components/signin.vue";
 import signup from "./components/signup.vue";
+import signout from "./components/signOut.vue";
 import eachBlog from "./components/eachBlog.vue";
 import editBlog from "./components/editBlog.vue";
 import Redirect from "./components/Redirect.vue";
@@ -15,7 +16,8 @@ Vue.use(Router);
 
 const routes = [
   { path: "/signup", component: signup },
-  { path: "/signin", component: signin },
+  { path: "/", component: signin },
+  { path: "/signout", component: signout },
   {
     path: "/restricted",
     component: restricted,
@@ -23,9 +25,13 @@ const routes = [
       { path: "/create", component: postBlog },
       { path: "/view", component: allBlogs },
       { path: "/view/:blogId", component: eachBlog },
-      { path: "/edit/:blogId", component: editBlog },
       {
-        path: "/user/:id",
+        path: "/edit/:blogId",
+        component: editBlog,
+        meta: { requiresAuth: true }
+      },
+      {
+        path: "/user",
         component: user,
         children: [{ path: "profile", component: userProfile }]
       }
@@ -45,6 +51,27 @@ const routes = [
 
 const router = new Router({ mode: "history", routes });
 
+router.beforeEach((to, from, next) => {
+  var authenticatedUser = localStorage.getItem("token");
+  window.console.log(authenticatedUser);
+  var user = !authenticatedUser ? {} : JSON.parse(authenticatedUser);
+
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!user) {
+      next({
+        path: "/",
+        query: { redirect: to.fullPath }
+      });
+    } else {
+      next();
+    }
+  } else {
+    next(); // make sure to always call next()!
+  }
+});
+
 // const router = new VueRouter({
 //   mode: "history",
 //   routes: [
@@ -58,12 +85,6 @@ const router = new Router({ mode: "history", routes });
 //     },
 //     // { path: "/delete/:blogId", component: DeleteblogComponent }
 //   ]
-// });
-
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(route => route.meta.requiresAuth)) {
-//     next("/create");
-//   } else next();
 // });
 
 // router.beforeEach((to, from, next) => {

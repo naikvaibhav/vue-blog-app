@@ -1,9 +1,9 @@
 <template>
   <div>
     <div id="single-blog" v-if="!deleted">
-      <h1>{{blog.title}}</h1>
-      <article>{{blog.content}}</article>
-      <router-link v-bind:to="'/edit/'+blog.blogId">
+      <h1>{{ blog.title }}</h1>
+      <article>{{ blog.content }}</article>
+      <router-link v-bind:to="'/edit/' + blog.blogId">
         <b-button class="mr-2" variant="info">Edit</b-button>
       </router-link>
       <!-- <router-link v-bind:to="'/delete/'+blog.blogId"> -->
