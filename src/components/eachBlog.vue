@@ -11,7 +11,10 @@
       <!-- </router-link> -->
     </div>
     <div v-if="deleted">
-      <h3>Blog is deleted.....</h3>
+      <h3>{{msg}}</h3>
+    </div>
+    <div v-else>
+      <h3>{{ msg }}</h3>
     </div>
   </div>
 </template>
@@ -24,7 +27,9 @@ export default {
     return {
       blogId: this.$route.params.blogId,
       blog: {},
-      deleted: false
+      deleted: false,
+      msg: "",
+      token: JSON.parse(localStorage.getItem("token"))
     };
   },
   created() {
@@ -39,10 +44,20 @@ export default {
   methods: {
     deleteBlog() {
       axios
-        .delete("http://localhost:3001/api/v1/blogs/delete/" + this.blogId)
+        .delete("http://localhost:3001/api/v1/blogs/delete/" + this.blogId, {
+          headers: {
+            authToken: this.token
+          }
+        })
         .then(result => {
-          window.console.log(result);
-          this.deleted = true;
+          if (this.token) {
+            window.console.log(result);
+            this.deleted = true;
+            this.msg = "Blog deleted....";
+          } else {
+            this.deleted = false;
+            this.msg = "Please signin to delete a blog...";
+          }
         })
         .catch(err => window.console.log(err));
     }

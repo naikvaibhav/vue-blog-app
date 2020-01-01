@@ -9,28 +9,13 @@
       <ul class="flex-outer pt-5">
         <li>
           <label for="email">Email</label>
-          <input
-            type="text"
-            id="email"
-            placeholder="Enter the email"
-            v-model="user.email"
-          />
+          <input type="text" id="email" placeholder="Enter the email" v-model="user.email" />
         </li>
         <li>
           <label for="password">Password</label>
-          <input
-            type="password"
-            placeholder="Enter the passsword"
-            v-model="user.password"
-          />
+          <input type="password" placeholder="Enter the passsword" v-model="user.password" />
         </li>
-        <button
-          type="submit"
-          style="margin-right:16px;"
-          v-on:click.prevent="signin"
-        >
-          SignIn
-        </button>
+        <button type="submit" style="margin-right:16px;" v-on:click.prevent="signin">SignIn</button>
       </ul>
     </form>
     <router-link to="/signup">Not a member? Sign Up</router-link>
@@ -62,12 +47,13 @@ export default {
           password: this.user.password
         })
         .then(data => {
-          localStorage.setItem("token", JSON.stringify(data));
+          localStorage.setItem("token", JSON.stringify(data.data.token));
           // window.console.log(data);
           this.msg = data.data.message;
           this.result = true;
-          window.console.log(JSON.parse(localStorage.getItem("token")).data);
+          window.console.log(JSON.parse(localStorage.getItem("token")));
           // this.id = data.data.data._id;
+          this.$router.push("/user/profile");
         })
         .catch(error => window.console.log(error));
     }

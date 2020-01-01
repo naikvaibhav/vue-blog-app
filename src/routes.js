@@ -51,26 +51,26 @@ const routes = [
 
 const router = new Router({ mode: "history", routes });
 
-router.beforeEach((to, from, next) => {
-  var authenticatedUser = localStorage.getItem("token");
-  window.console.log(authenticatedUser);
-  var user = !authenticatedUser ? {} : JSON.parse(authenticatedUser);
+// router.beforeEach((to, from, next) => {
+//   var authenticatedUser = localStorage.getItem("token");
+//   window.console.log(authenticatedUser);
+//   var user = !authenticatedUser ? {} : JSON.parse(authenticatedUser);
 
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
-    if (!user) {
-      next({
-        path: "/",
-        query: { redirect: to.fullPath }
-      });
-    } else {
-      next();
-    }
-  } else {
-    next(); // make sure to always call next()!
-  }
-});
+//   if (to.matched.some(record => record.meta.requiresAuth)) {
+//     // this route requires auth, check if logged in
+//     // if not, redirect to login page.
+//     if (!user) {
+//       next({
+//         path: "/",
+//         query: { redirect: to.fullPath }
+//       });
+//     } else {
+//       next();
+//     }
+//   } else {
+//     next(); // make sure to always call next()!
+//   }
+// });
 
 // const router = new VueRouter({
 //   mode: "history",

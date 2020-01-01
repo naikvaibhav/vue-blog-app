@@ -1,6 +1,6 @@
 <template>
   <div id="add-blog">
-    <form>
+    <form v-if="!submitted">
       <h2>Add a new blog post</h2>
       <label>Blog Title:</label>
       <input type="text" required v-model.lazy="blog.title" />
@@ -19,10 +19,14 @@
         </option>
       </select>-->
       <br />
-      <b-button class="mt-2" v-on:click.prevent="post" variant="primary"
-        >Add blog</b-button
-      >
+      <b-button class="mt-2" v-on:click.prevent="post" variant="primary">Add blog</b-button>
     </form>
+    <div v-if="submitted">
+      <h3>Blog is edited.....</h3>
+    </div>
+    <div v-else>
+      <h3>{{ msg }}</h3>
+    </div>
 
     <div id="preview">
       <h3>Preview Blogs</h3>
@@ -41,7 +45,10 @@ export default {
   name: "editBlog",
   data() {
     return {
-      blog: {}
+      blog: {},
+      submitted: false,
+      msg: "",
+      token: JSON.parse(localStorage.getItem("token"))
     };
   },
   methods: {
@@ -58,12 +65,19 @@ export default {
           },
           {
             headers: {
-              authToken: JSON.parse(localStorage.getItem("token")).data
+              authToken: this.token
             }
           }
         )
         .then(data => {
-          window.console.log(data);
+          if (this.token) {
+            window.console.log(data);
+            this.submitted = true;
+            this.msg = "Blog edited";
+          } else {
+            this.submitted = false;
+            this.msg = "Please signin to edit a blog...";
+          }
         })
         .catch(err => {
           window.console.log(err);

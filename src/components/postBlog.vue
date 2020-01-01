@@ -12,14 +12,10 @@
       <input type="text" required v-model.lazy="blog.author" />
       <label style="display:inline-block">Category of blog:</label>
       <select v-model="blog.category">
-        <option v-bind:key="category" v-for="category in categories">
-          {{ category }}
-        </option>
+        <option v-bind:key="category" v-for="category in categories">{{ category }}</option>
       </select>
       <br />
-      <b-button class="mt-2" v-on:click.prevent="post" variant="primary"
-        >Add blog</b-button
-      >
+      <b-button class="mt-2" v-on:click.prevent="post" variant="primary">Add blog</b-button>
     </form>
     <div v-if="submitted">
       <h3>Blog is posted.....</h3>
@@ -61,26 +57,39 @@ export default {
         "Travel"
       ],
       submitted: false,
-      msg: ""
+      msg: "",
+      token: JSON.parse(localStorage.getItem("token"))
     };
   },
   methods: {
     post() {
       axios
-        .post("http://localhost:3001/api/v1/blogs/create", {
-          title: this.blog.title,
-          description: this.blog.description,
-          author: this.blog.author,
-          content: this.blog.content,
-          category: this.blog.category
-        })
+        .post(
+          "http://localhost:3001/api/v1/blogs/create",
+          {
+            title: this.blog.title,
+            description: this.blog.description,
+            author: this.blog.author,
+            content: this.blog.content,
+            category: this.blog.category
+          },
+          {
+            headers: {
+              authToken: this.token
+            }
+          }
+        )
         .then(data => {
-          window.console.log(data);
-          this.submitted = true;
+          if (this.token) {
+            window.console.log(data);
+            this.submitted = true;
+          } else {
+            this.submitted = false;
+            this.msg = "Please signin to post a blog...";
+          }
         })
         .catch(err => {
           window.console.log(err);
-          this.msg = "Please signin to post a blog...";
         });
     }
   }

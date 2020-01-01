@@ -4,23 +4,20 @@ import BootstrapVue from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import routes from "./routes";
+import store from "./store/store";
 
-// new VueRouter({
-//   routes: [{ path: "/", component: Home }]
-// });
-
-// // Redirect to the home route if any routes are unmatched
+// Redirect to the home route if any routes are unmatched
 // router.redirect({
 //   "*": "/home"
 // });
 
 Vue.config.productionTip = false;
 // Vue.use(VueAxios, axios);
-// Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 const router = routes;
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount("#app");
