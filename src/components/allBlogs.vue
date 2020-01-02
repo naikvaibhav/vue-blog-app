@@ -1,6 +1,8 @@
 <template>
   <div id="show-blogs">
     <h1>View all the blogs</h1>
+    <input type="text" v-model="search" />
+    <button type="submit" v-on:click.prevent="searchBlogs">Search</button>
     <div v-bind:key="blog.blogId" v-for="blog in blogs" class="single-blog">
       <router-link v-bind:to="'/view/'+blog.blogId">
         <h2 style="border-bottom: 2px solid black">{{ blog.title }}</h2>
@@ -17,7 +19,8 @@ export default {
   name: "allBlogs",
   data() {
     return {
-      blogs: []
+      blogs: [],
+      search: ""
     };
   },
   methods: {},

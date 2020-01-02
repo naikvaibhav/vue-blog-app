@@ -53,10 +53,10 @@ export default {
           if (this.token) {
             window.console.log(result);
             this.deleted = true;
-            this.msg = "Blog deleted....";
+            this.msg = result.data.message;
           } else {
             this.deleted = false;
-            this.msg = "Please signin to delete a blog...";
+            this.msg = result.data.message;
           }
         })
         .catch(err => window.console.log(err));

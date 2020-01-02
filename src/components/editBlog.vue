@@ -22,7 +22,7 @@
       <b-button class="mt-2" v-on:click.prevent="post" variant="primary">Add blog</b-button>
     </form>
     <div v-if="submitted">
-      <h3>Blog is edited.....</h3>
+      <h3>{{msg}}</h3>
     </div>
     <div v-else>
       <h3>{{ msg }}</h3>
@@ -73,10 +73,10 @@ export default {
           if (this.token) {
             window.console.log(data);
             this.submitted = true;
-            this.msg = "Blog edited";
+            this.msg = data.data.message;
           } else {
             this.submitted = false;
-            this.msg = "Please signin to edit a blog...";
+            this.msg = data.data.message;
           }
         })
         .catch(err => {
