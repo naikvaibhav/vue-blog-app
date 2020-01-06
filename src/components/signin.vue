@@ -18,7 +18,8 @@
         <button
           type="submit"
           style="margin-right:16px;"
-          v-on:click.prevent="signin('success')"
+          v-on:click.prevent="signin('b-toaster-top-center')"
+          class="mb-2"
         >SignIn</button>
       </ul>
     </form>
@@ -75,11 +76,7 @@ export default {
             "email",
             JSON.stringify(this.email.userInfo.email)
           );
-          this.$bvToast.toast("Toast body content", {
-            title: `Variant`,
-            solid: true
-          });
-          // this.$router.push("/user/profile");
+          this.$router.push("/user/profile");
         })
         .catch(error => window.console.log(error));
     }

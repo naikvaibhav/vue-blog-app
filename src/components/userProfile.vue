@@ -16,6 +16,14 @@ export default {
     return {
       email: JSON.parse(localStorage.getItem("email"))
     };
+  },
+  created() {
+    this.$bvToast.toast("Signin success", {
+      title: `Signin`,
+      variant: "success",
+
+      solid: true
+    });
   }
 };
 </script>
