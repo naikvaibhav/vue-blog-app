@@ -63,7 +63,7 @@ form {
   padding-bottom: 2%;
 }
 body {
-  font: normal 18px/1.5 "Fira Sans", "Helvetica Neue", sans-serif;
+  /* font: normal 18px/1.5 "Fira Sans", "Helvetica Neue", sans-serif; */
   /* background: #3aafab; */
   color: #fff;
   padding: 50px 0;

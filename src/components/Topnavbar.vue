@@ -14,3 +14,15 @@
     </b-nav-item>
   </b-nav>
 </template>
+
+
+<script>
+export default {
+  name: topnavbar,
+  data() {
+    return {
+      email: JSON.parse(localStorage.getItem("email"))
+    };
+  }
+};
+</script>

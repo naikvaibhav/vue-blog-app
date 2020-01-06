@@ -1,7 +1,7 @@
 <template>
   <div id="add-blog">
     <form v-if="!submitted">
-      <h2>Add a new blog post</h2>
+      <h2>Edit the blog</h2>
       <label>Blog Title:</label>
       <input type="text" required v-model.lazy="blog.title" />
       <label>Blog Description:</label>
@@ -19,10 +19,11 @@
         </option>
       </select>-->
       <br />
-      <b-button class="mt-2" v-on:click.prevent="post" variant="primary">Add blog</b-button>
+      <b-button class="mt-2" v-on:click.prevent="post" variant="primary">Post the edited blog</b-button>
     </form>
     <div v-if="submitted">
       <h3>{{msg}}</h3>
+      <router-link to="/view">Go here</router-link>
     </div>
     <div v-else>
       <h3>{{ msg }}</h3>
@@ -52,36 +53,91 @@ export default {
     };
   },
   methods: {
+    // post() {
+    //   axios
+    //     .put(
+    //       "http://localhost:3001/api/v1/blogs/edit/" + this.blog.blogId,
+    //       {
+    //         title: this.blog.title,
+    //         description: this.blog.description,
+    //         author: this.blog.author,
+    //         content: this.blog.content,
+    //         category: this.blog.category
+    //       },
+    //       {
+    //         headers: {
+    //           authToken: this.token
+    //         }
+    //       }
+    //     )
+    //     .then(data => {
+    //       if (this.token) {
+    //         window.console.log(data);
+    //         this.submitted = true;
+    //         this.msg = data.data.message;
+    //       } else {
+    //         this.submitted = false;
+    //         this.msg = data.data.message;
+    //       }
+    //     })
+    //     .catch(err => {
+    //       window.console.log(err);
+    //     });
+    // }
     post() {
-      axios
-        .put(
-          "http://localhost:3001/api/v1/blogs/edit/" + this.blog.blogId,
-          {
-            title: this.blog.title,
-            description: this.blog.description,
-            author: this.blog.author,
-            content: this.blog.content,
-            category: this.blog.category
-          },
-          {
-            headers: {
-              authToken: this.token
-            }
-          }
-        )
-        .then(data => {
-          if (this.token) {
-            window.console.log(data);
-            this.submitted = true;
-            this.msg = data.data.message;
-          } else {
-            this.submitted = false;
-            this.msg = data.data.message;
-          }
-        })
-        .catch(err => {
-          window.console.log(err);
-        });
+      this.$swal({
+        title: "Are you sure?",
+        text: "You can't revert your action",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes Edit it!",
+        cancelButtonText: "No, Keep it!",
+        showCloseButton: true
+      }).then(result => {
+        if (result.value) {
+          // window.console.log("Result of sweetalert button", result);
+          axios
+            .put(
+              "http://localhost:3001/api/v1/blogs/edit/" + this.blog.blogId,
+              {
+                title: this.blog.title,
+                description: this.blog.description,
+                author: this.blog.author,
+                content: this.blog.content,
+                category: this.blog.category
+              },
+              {
+                headers: {
+                  authToken: this.token
+                }
+              }
+            )
+            .then(data => {
+              if (this.token) {
+                window.console.log(data);
+                this.submitted = true;
+                this.msg = data.data.message;
+                if (this.msg === "Blog edited successfully") {
+                  this.$swal("Edited", this.msg, "success");
+                  this.$router.push("/view");
+                } else {
+                  this.$swal("Edited", this.msg, "error");
+                }
+              } else {
+                // window.console.log(data);
+                this.submitted = false;
+                // this.msg = data.data;
+                this.$swal("Acess Denied", this.msg, "warning");
+              }
+            })
+            .catch(err => {
+              window.console.log(err);
+            });
+        } else {
+          // window.console.log("Result of sweetalert button", result);
+          this.$swal("Cancelled", "Your blog is still intact", "info");
+        }
+      });
     }
   },
   created() {

@@ -54,7 +54,9 @@ export default {
         "Sports",
         "Science",
         "Fiction",
-        "Travel"
+        "Travel",
+        "Politics",
+        "Current affairs"
       ],
       submitted: false,
       msg: "",

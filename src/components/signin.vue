@@ -15,7 +15,11 @@
           <label for="password">Password</label>
           <input type="password" placeholder="Enter the passsword" v-model="user.password" />
         </li>
-        <button type="submit" style="margin-right:16px;" v-on:click.prevent="signin">SignIn</button>
+        <button
+          type="submit"
+          style="margin-right:16px;"
+          v-on:click.prevent="signin('success')"
+        >SignIn</button>
       </ul>
     </form>
     <router-link to="/signup">Not a member? Sign Up</router-link>
@@ -34,8 +38,10 @@ export default {
         password: ""
       },
       result: false,
-      msg: ""
-      // id: ""
+      msg: "",
+      // id: "",
+      token: "",
+      email: ""
     };
   },
   created() {},
@@ -52,8 +58,28 @@ export default {
           this.msg = data.data.message;
           this.result = true;
           window.console.log(JSON.parse(localStorage.getItem("token")));
+          this.token = JSON.parse(localStorage.getItem("token"));
           // this.id = data.data.data._id;
-          this.$router.push("/user/profile");
+
+          //decoding the token to fetch the email of the user
+          const parseJwt = token => {
+            try {
+              return JSON.parse(atob(token.split(".")[1]));
+            } catch (e) {
+              return null;
+            }
+          };
+          this.email = parseJwt(this.token);
+          window.console.log(this.email.userInfo.email);
+          localStorage.setItem(
+            "email",
+            JSON.stringify(this.email.userInfo.email)
+          );
+          this.$bvToast.toast("Toast body content", {
+            title: `Variant`,
+            solid: true
+          });
+          // this.$router.push("/user/profile");
         })
         .catch(error => window.console.log(error));
     }
@@ -66,7 +92,7 @@ form {
   padding-bottom: 2%;
 }
 body {
-  font: normal 18px/1.5 "Fira Sans", "Helvetica Neue", sans-serif;
+  /* font: normal 18px/1.5 "Fira Sans", "Helvetica Neue", sans-serif; */
   /* background: #3aafab; */
   color: #fff;
   padding: 50px 0;
