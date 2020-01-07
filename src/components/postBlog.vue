@@ -14,6 +14,7 @@
       <select v-model="blog.category">
         <option v-bind:key="category" v-for="category in categories">{{ category }}</option>
       </select>
+      <input type="file" name="file" @change="handleFileChange" />
       <br />
       <b-button class="mt-2" v-on:click.prevent="post" variant="primary">Add blog</b-button>
     </form>
@@ -60,10 +61,16 @@ export default {
       ],
       submitted: false,
       msg: "",
-      token: JSON.parse(localStorage.getItem("token"))
+      token: JSON.parse(localStorage.getItem("token")),
+      getImageName: " "
     };
   },
   methods: {
+    handleFileChange(e) {
+      // Whenever the file changes, emit the 'input' event with the file data.
+      window.console.log(e.target.files[0].name);
+      return (this.getImageName = e.target.files[0].name);
+    },
     post() {
       axios
         .post(
@@ -73,7 +80,8 @@ export default {
             description: this.blog.description,
             author: this.blog.author,
             content: this.blog.content,
-            category: this.blog.category
+            category: this.blog.category,
+            blogImage: this.getImageName
           },
           {
             headers: {
@@ -111,6 +119,7 @@ label {
   margin: 20px 0 10px;
 }
 input[type="text"],
+input[type="file"],
 textarea {
   display: block;
   width: 100%;

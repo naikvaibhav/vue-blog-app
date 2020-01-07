@@ -8,15 +8,21 @@
       <b-row>
         <b-col sm="12" md="4" lg="3" v-bind:key="blog.blogId" v-for="blog in blogs">
           <b-card-group deck>
-            <router-link v-bind:to="'/view/'+blog.blogId">
-              <b-card bg-variant="light" :header="blog.title" class="mb-3 text-center">
-                <b-card-text>Author of the blog: {{blog.author}}</b-card-text>
-                <b-card-text>{{ blog.description }}</b-card-text>
-                <template v-slot:footer>
-                  <small class="text-muted">{{blog.views}} views</small>
-                </template>
-              </b-card>
-            </router-link>
+            <b-card
+              :img-src="blog.blogImage"
+              bg-variant="light"
+              :header="blog.title"
+              class="mb-3 text-center"
+            >
+              <b-card-text>Author of the blog: {{blog.author}}</b-card-text>
+              <b-card-text>{{ blog.description }}</b-card-text>
+              <router-link v-bind:to="'/view/'+blog.blogId">
+                <b-button variant="outline-primary">View in detail</b-button>
+              </router-link>
+              <template v-slot:footer>
+                <small class="text-muted">{{blog.views}} views</small>
+              </template>
+            </b-card>
           </b-card-group>
         </b-col>
       </b-row>

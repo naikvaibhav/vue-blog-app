@@ -75,11 +75,12 @@ export default {
             "email",
             JSON.stringify(this.email.userInfo.email)
           );
-          this.$bvToast.toast("Toast body content", {
-            title: `Variant`,
+          this.$bvToast.toast("Signin sucessfull", {
+            title: `Sigin`,
+            variant: "success",
             solid: true
           });
-          // this.$router.push("/user/profile");
+          this.$router.push("/user/profile");
         })
         .catch(error => window.console.log(error));
     }
