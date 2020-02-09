@@ -11,13 +11,13 @@
       <label>Author name:</label>
       <input type="text" required v-model.lazy="blog.author" />
       <label style="display:inline-block">Category of blog:</label>
-      <!-- <select v-model="blog.category">
+      <select v-model="blog.category">
         <option v-bind:key="category" v-for="category in categories">
           {{
           category
           }}
         </option>
-      </select>-->
+      </select>
       <br />
       <b-button class="mt-2" v-on:click.prevent="post" variant="primary">Post the edited blog</b-button>
     </form>
@@ -49,7 +49,17 @@ export default {
       blog: {},
       submitted: false,
       msg: "",
-      token: JSON.parse(localStorage.getItem("token"))
+      token: JSON.parse(localStorage.getItem("token")),
+      categories: [
+        "Food",
+        "Adventure",
+        "Sports",
+        "Science",
+        "Fiction",
+        "Travel",
+        "Politics",
+        "Current affairs"
+      ]
     };
   },
   methods: {
@@ -100,9 +110,9 @@ export default {
             .put(
               "http://localhost:3001/api/v1/blogs/edit/" + this.blog.blogId,
               {
-                title: this.blog.title,
-                description: this.blog.description,
-                author: this.blog.author,
+                title: this.blog.title.trim(),
+                description: this.blog.description.trim(),
+                author: this.blog.author.trim(),
                 content: this.blog.content,
                 category: this.blog.category
               },

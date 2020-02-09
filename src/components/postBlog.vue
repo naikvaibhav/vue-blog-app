@@ -42,11 +42,11 @@ export default {
   data() {
     return {
       blog: {
-        title: " ",
-        description: " ",
-        content: " ",
-        category: " ",
-        author: " "
+        title: "",
+        description: "",
+        content: "",
+        category: "",
+        author: ""
       },
       categories: [
         "Food",
@@ -69,9 +69,9 @@ export default {
         .post(
           "http://localhost:3001/api/v1/blogs/create",
           {
-            title: this.blog.title,
-            description: this.blog.description,
-            author: this.blog.author,
+            title: this.blog.title.trim(),
+            description: this.blog.description.trim(),
+            author: this.blog.author.trim(),
             content: this.blog.content,
             category: this.blog.category
           },

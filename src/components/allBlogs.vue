@@ -1,6 +1,7 @@
 <template>
   <div>
-    <userProfile />
+    <!-- <userProfile /> -->
+    <userEmail />
     <h1>View all the blogs</h1>
     <!-- <input type="text" v-model="search" />
     <button type="submit" v-on:click.prevent="searchBlogs">Search</button>-->
@@ -35,11 +36,13 @@
 
 <script>
 import axios from "axios";
-import userProfile from "./userProfile";
+// import userProfile from "./userProfile";
+import userEmail from "./user";
 export default {
   name: "allBlogs",
   components: {
-    userProfile
+    // userProfile,
+    userEmail
   },
   data() {
     return {

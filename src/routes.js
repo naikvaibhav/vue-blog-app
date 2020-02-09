@@ -19,6 +19,11 @@ const routes = [
   { path: "/", component: signin },
   { path: "/signout", component: signout },
   {
+    path: "/user",
+    component: user,
+    children: [{ path: "profile", component: userProfile }]
+  },
+  {
     path: "/restricted",
     component: restricted,
     children: [
@@ -32,8 +37,8 @@ const routes = [
       },
       {
         path: "/user",
-        component: user,
-        children: [{ path: "profile", component: userProfile }]
+        component: user
+        //   children: [{ path: "profile", component: userProfile }]
       }
     ]
   },
