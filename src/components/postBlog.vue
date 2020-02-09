@@ -67,7 +67,7 @@ export default {
     post() {
       axios
         .post(
-          "http://localhost:3001/api/v1/blogs/create",
+          "https://vueapi.angularweb.tech/api/v1/blogs/create",
           {
             title: this.blog.title.trim(),
             description: this.blog.description.trim(),

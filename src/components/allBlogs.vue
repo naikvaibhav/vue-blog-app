@@ -2,6 +2,11 @@
   <div>
     <!-- <userProfile /> -->
     <userEmail />
+    <br />
+    <input type="text" placeholder="Search by author" v-model="search" />
+    <b-button class="ml-2" variant="primary" v-on:click="searchByAuthor">Search</b-button>
+    <br />
+    <br />
     <h1>View all the blogs</h1>
     <!-- <input type="text" v-model="search" />
     <button type="submit" v-on:click.prevent="searchBlogs">Search</button>-->
@@ -50,11 +55,21 @@ export default {
       search: ""
     };
   },
-  methods: {},
+  methods: {
+    searchByAuthor() {
+      axios
+        .get(
+          "https://vueapi.angularweb.tech/api/v1/blogs/view?author=" +
+            this.search
+        )
+        .then(res => (this.blogs = res.data.data))
+        .catch(err => window.console.log(err));
+    }
+  },
   //life cycle hook is used to fire when the component is first component to get the data
   created() {
     axios
-      .get("http://localhost:3001/api/v1/blogs/view/all")
+      .get("https://vueapi.angularweb.tech/api/v1/blogs/view/all")
       .then(res => (this.blogs = res.data.data.blogs))
       .catch(err => window.console.log(err));
   }

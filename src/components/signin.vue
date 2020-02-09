@@ -48,7 +48,7 @@ export default {
   methods: {
     signin() {
       axios
-        .post("http://localhost:3001/api/v1/users/signin", {
+        .post("https://vueapi.angularweb.tech/api/v1/users/signin", {
           email: this.user.email,
           password: this.user.password
         })

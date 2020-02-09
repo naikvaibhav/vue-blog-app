@@ -108,7 +108,8 @@ export default {
           // window.console.log("Result of sweetalert button", result);
           axios
             .put(
-              "http://localhost:3001/api/v1/blogs/edit/" + this.blog.blogId,
+              "https://vueapi.angularweb.tech/api/v1/blogs/edit/" +
+                this.blog.blogId,
               {
                 title: this.blog.title.trim(),
                 description: this.blog.description.trim(),
@@ -153,7 +154,8 @@ export default {
   created() {
     axios
       .get(
-        "http://localhost:3001/api/v1/blogs/view/" + this.$route.params.blogId
+        "https://vueapi.angularweb.tech/api/v1/blogs/view/" +
+          this.$route.params.blogId
       )
       .then(data => {
         window.console.log(data.data.data);

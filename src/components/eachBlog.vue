@@ -57,7 +57,7 @@ export default {
   },
   created() {
     axios
-      .get("http://localhost:3001/api/v1/blogs/view/" + this.blogId)
+      .get("https://vueapi.angularweb.tech/api/v1/blogs/view/" + this.blogId)
       .then(result => {
         window.console.log(result.data.data);
         this.blog = result.data.data;
@@ -99,7 +99,8 @@ export default {
           // window.console.log("Result of sweetalert button", result);
           axios
             .delete(
-              "http://localhost:3001/api/v1/blogs/delete/" + this.blogId,
+              "https://vueapi.angularweb.tech/api/v1/blogs/delete/" +
+                this.blogId,
               {
                 headers: {
                   authToken: this.token
