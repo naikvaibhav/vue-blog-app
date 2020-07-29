@@ -9,17 +9,28 @@
       <ul class="flex-outer pt-5">
         <li>
           <label for="email">Email</label>
-          <input type="text" id="email" placeholder="Enter the email" v-model="user.email" />
+          <input
+            type="text"
+            id="email"
+            placeholder="Enter the email"
+            v-model="user.email"
+          />
         </li>
         <li>
           <label for="password">Password</label>
-          <input type="password" placeholder="Enter the passsword" v-model="user.password" />
+          <input
+            type="password"
+            placeholder="Enter the passsword"
+            v-model="user.password"
+          />
         </li>
         <button
           type="submit"
           style="margin-right:16px;"
           v-on:click.prevent="signin('success')"
-        >SignIn</button>
+        >
+          SignIn
+        </button>
       </ul>
     </form>
     <router-link to="/signup">Not a member? Sign Up</router-link>
@@ -35,24 +46,24 @@ export default {
     return {
       user: {
         email: "",
-        password: ""
+        password: "",
       },
       result: false,
       msg: "",
       // id: "",
       token: "",
-      email: ""
+      email: "",
     };
   },
   created() {},
   methods: {
     signin() {
       axios
-        .post("https://vueapi.angularweb.tech/api/v1/users/signin", {
+        .post("https://apivueblog.naikvaibhav.online/api/v1/users/signin", {
           email: this.user.email,
-          password: this.user.password
+          password: this.user.password,
         })
-        .then(data => {
+        .then((data) => {
           localStorage.setItem("token", JSON.stringify(data.data.token));
           // window.console.log(data);
           this.msg = data.data.message;
@@ -61,7 +72,7 @@ export default {
           this.token = JSON.parse(localStorage.getItem("token"));
           // this.id = data.data.data._id;
           //decoding the token to fetch the email of the user
-          const parseJwt = token => {
+          const parseJwt = (token) => {
             try {
               return JSON.parse(atob(token.split(".")[1]));
             } catch (e) {
@@ -77,13 +88,13 @@ export default {
           this.$bvToast.toast("Signin sucessfull", {
             title: `Sigin`,
             variant: "success",
-            solid: true
+            solid: true,
           });
           this.$router.push("/user/profile");
         })
-        .catch(error => window.console.log(error));
-    }
-  }
+        .catch((error) => window.console.log(error));
+    },
+  },
 };
 </script>
 

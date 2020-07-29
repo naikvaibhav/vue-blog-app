@@ -52,17 +52,19 @@ export default {
       blog: {},
       deleted: false,
       msg: "",
-      token: JSON.parse(localStorage.getItem("token"))
+      token: JSON.parse(localStorage.getItem("token")),
     };
   },
   created() {
     axios
-      .get("https://vueapi.angularweb.tech/api/v1/blogs/view/" + this.blogId)
-      .then(result => {
+      .get(
+        "https://apivueblog.naikvaibhav.online/api/v1/blogs/view/" + this.blogId
+      )
+      .then((result) => {
         window.console.log(result.data.data);
         this.blog = result.data.data;
       })
-      .catch(err => window.console.log(err));
+      .catch((err) => window.console.log(err));
   },
   methods: {
     // deleteBlog() {
@@ -93,21 +95,21 @@ export default {
         showCancelButton: true,
         confirmButtonText: "Yes Delete it!",
         cancelButtonText: "No, Keep it!",
-        showCloseButton: true
-      }).then(result => {
+        showCloseButton: true,
+      }).then((result) => {
         if (result.value) {
           // window.console.log("Result of sweetalert button", result);
           axios
             .delete(
-              "https://vueapi.angularweb.tech/api/v1/blogs/delete/" +
+              "https://apivueblog.naikvaibhav.online/api/v1/blogs/delete/" +
                 this.blogId,
               {
                 headers: {
-                  authToken: this.token
-                }
+                  authToken: this.token,
+                },
               }
             )
-            .then(data => {
+            .then((data) => {
               if (this.token) {
                 window.console.log(data);
                 this.deleted = true;
@@ -125,15 +127,15 @@ export default {
                 this.$swal("Acess Denied", this.msg, "warning");
               }
             })
-            .catch(err => window.console.log(err));
+            .catch((err) => window.console.log(err));
           // this.$swal("Deleted", "You successfully deleted this", "success");
         } else {
           // window.console.log("Result of sweetalert button", result);
           this.$swal("Cancelled", "Your blog is still intact", "info");
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

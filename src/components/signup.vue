@@ -9,13 +9,28 @@
       <ul class="flex-outer pt-5">
         <li>
           <label for="email">Email</label>
-          <input type="text" id="email" placeholder="Enter the email" v-model="newUser.email" />
+          <input
+            type="text"
+            id="email"
+            placeholder="Enter the email"
+            v-model="newUser.email"
+          />
         </li>
         <li>
           <label for="password">Password</label>
-          <input type="password" placeholder="Enter the passsword" v-model="newUser.password" />
+          <input
+            type="password"
+            placeholder="Enter the passsword"
+            v-model="newUser.password"
+          />
         </li>
-        <button type="submit" style="margin-right:16px;" v-on:click.prevent="signup">Signup</button>
+        <button
+          type="submit"
+          style="margin-right:16px;"
+          v-on:click.prevent="signup"
+        >
+          Signup
+        </button>
       </ul>
     </form>
     <router-link to="/signin">Already a member? Sign In</router-link>
@@ -30,33 +45,32 @@ export default {
     return {
       newUser: {
         email: "",
-        password: ""
+        password: "",
       },
-      msg: ""
+      msg: "",
     };
   },
   methods: {
     signup() {
       axios
-        .post("https://vueapi.angularweb.tech/api/v1/users/signup", {
+        .post("https://apivueblog.naikvaibhav.online/api/v1/users/signup", {
           email: this.newUser.email,
-          password: this.newUser.password
+          password: this.newUser.password,
         })
-        .then(data => {
+        .then((data) => {
           window.console.log(data);
           this.msg = data.data.message;
         })
-        .catch(err => window.console.log(err));
-    }
+        .catch((err) => window.console.log(err));
+    },
   },
   computed: {
     hide() {
       return this.$route.path === "/signin" || this.$route.path === "/signup";
-    }
-  }
+    },
+  },
 };
 </script>
-
 
 <style scoped>
 form {

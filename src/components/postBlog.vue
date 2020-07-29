@@ -12,10 +12,14 @@
       <input type="text" required v-model.lazy="blog.author" />
       <label style="display:inline-block">Category of blog:</label>
       <select v-model="blog.category">
-        <option v-bind:key="category" v-for="category in categories">{{ category }}</option>
+        <option v-bind:key="category" v-for="category in categories">{{
+          category
+        }}</option>
       </select>
       <br />
-      <b-button class="mt-2" v-on:click.prevent="post" variant="primary">Add blog</b-button>
+      <b-button class="mt-2" v-on:click.prevent="post" variant="primary"
+        >Add blog</b-button
+      >
     </form>
     <div v-if="submitted">
       <h3>Blog is posted.....</h3>
@@ -46,7 +50,7 @@ export default {
         description: "",
         content: "",
         category: "",
-        author: ""
+        author: "",
       },
       categories: [
         "Food",
@@ -56,32 +60,32 @@ export default {
         "Fiction",
         "Travel",
         "Politics",
-        "Current affairs"
+        "Current affairs",
       ],
       submitted: false,
       msg: "",
-      token: JSON.parse(localStorage.getItem("token"))
+      token: JSON.parse(localStorage.getItem("token")),
     };
   },
   methods: {
     post() {
       axios
         .post(
-          "https://vueapi.angularweb.tech/api/v1/blogs/create",
+          "https://apivueblog.naikvaibhav.online/api/v1/blogs/create",
           {
             title: this.blog.title.trim(),
             description: this.blog.description.trim(),
             author: this.blog.author.trim(),
             content: this.blog.content,
-            category: this.blog.category
+            category: this.blog.category,
           },
           {
             headers: {
-              authToken: this.token
-            }
+              authToken: this.token,
+            },
           }
         )
-        .then(data => {
+        .then((data) => {
           if (this.token) {
             window.console.log(data);
             this.submitted = true;
@@ -90,11 +94,11 @@ export default {
             this.msg = "Please signin to post a blog...";
           }
         })
-        .catch(err => {
+        .catch((err) => {
           window.console.log(err);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

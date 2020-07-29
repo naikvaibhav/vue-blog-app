@@ -13,16 +13,16 @@
       <label style="display:inline-block">Category of blog:</label>
       <select v-model="blog.category">
         <option v-bind:key="category" v-for="category in categories">
-          {{
-          category
-          }}
+          {{ category }}
         </option>
       </select>
       <br />
-      <b-button class="mt-2" v-on:click.prevent="post" variant="primary">Post the edited blog</b-button>
+      <b-button class="mt-2" v-on:click.prevent="post" variant="primary"
+        >Post the edited blog</b-button
+      >
     </form>
     <div v-if="submitted">
-      <h3>{{msg}}</h3>
+      <h3>{{ msg }}</h3>
       <router-link to="/view">Go here</router-link>
     </div>
     <div v-else>
@@ -58,8 +58,8 @@ export default {
         "Fiction",
         "Travel",
         "Politics",
-        "Current affairs"
-      ]
+        "Current affairs",
+      ],
     };
   },
   methods: {
@@ -102,28 +102,28 @@ export default {
         showCancelButton: true,
         confirmButtonText: "Yes Edit it!",
         cancelButtonText: "No, Keep it!",
-        showCloseButton: true
-      }).then(result => {
+        showCloseButton: true,
+      }).then((result) => {
         if (result.value) {
           // window.console.log("Result of sweetalert button", result);
           axios
             .put(
-              "https://vueapi.angularweb.tech/api/v1/blogs/edit/" +
+              "https://apivueblog.naikvaibhav.online/api/v1/blogs/edit/" +
                 this.blog.blogId,
               {
                 title: this.blog.title.trim(),
                 description: this.blog.description.trim(),
                 author: this.blog.author.trim(),
                 content: this.blog.content,
-                category: this.blog.category
+                category: this.blog.category,
               },
               {
                 headers: {
-                  authToken: this.token
-                }
+                  authToken: this.token,
+                },
               }
             )
-            .then(data => {
+            .then((data) => {
               if (this.token) {
                 window.console.log(data);
                 this.submitted = true;
@@ -141,7 +141,7 @@ export default {
                 this.$swal("Acess Denied", this.msg, "warning");
               }
             })
-            .catch(err => {
+            .catch((err) => {
               window.console.log(err);
             });
         } else {
@@ -149,21 +149,21 @@ export default {
           this.$swal("Cancelled", "Your blog is still intact", "info");
         }
       });
-    }
+    },
   },
   created() {
     axios
       .get(
-        "https://vueapi.angularweb.tech/api/v1/blogs/view/" +
+        "https://apivueblog.naikvaibhav.online/api/v1/blogs/view/" +
           this.$route.params.blogId
       )
-      .then(data => {
+      .then((data) => {
         window.console.log(data.data.data);
         this.blog = data.data.data;
         window.console.log(this.blog);
       })
-      .catch(err => window.console.log(err));
-  }
+      .catch((err) => window.console.log(err));
+  },
 };
 </script>
 
